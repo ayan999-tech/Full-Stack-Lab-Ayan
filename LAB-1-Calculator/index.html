@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic HTML Structure</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+    }
+
+    .calculator {
+      width: 320px;
+      background: #ffffff;
+      border: 2px solid #d9d9d9;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .display {
+      width: 100%;
+      height: 70px;
+      background: #f9f9f9;
+      border: 1px solid #d9d9d9;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 15px;
+      font-size: 28px;
+      font-weight: bold;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-spacing: 10px;
+    }
+
+    button {
+      width: 100%;
+      height: 50px;
+      font-size: 20px;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      background: #f7f7f7;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ececec;
+    }
+
+    .operator {
+      background: #eaf3ff;
+    }
+
+    .equal {
+      background: #d9f7d9;
+    }
+
+    .clear {
+      background: #ffe6e6;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+
+    <table>
+      <tr>
+        <td><button class="clear" id="clearBtn">C</button></td>
+        <td><button class="operator" data-value="/">/</button></td>
+        <td><button class="operator" data-value="*">*</button></td>
+        <td><button class="operator" data-value="-">-</button></td>
+      </tr>
+      <tr>
+        <td><button class="number" data-value="7">7</button></td>
+        <td><button class="number" data-value="8">8</button></td>
+        <td><button class="number" data-value="9">9</button></td>
+        <td><button class="operator" data-value="+">+</button></td>
+      </tr>
+      <tr>
+        <td><button class="number" data-value="4">4</button></td>
+        <td><button class="number" data-value="5">5</button></td>
+        <td><button class="number" data-value="6">6</button></td>
+        <td rowspan="2"><button class="equal" id="equalsBtn">=</button></td>
+      </tr>
+      <tr>
+        <td><button class="number" data-value="1">1</button></td>
+        <td><button class="number" data-value="2">2</button></td>
+        <td><button class="number" data-value="3">3</button></td>
+      </tr>
+      <tr>
+        <td colspan="2"><button class="number" data-value="0">0</button></td>
+        <td><button class="number" data-value=".">.</button></td>
+        <td><button class="operator" data-value="%">%</button></td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+</html>
+

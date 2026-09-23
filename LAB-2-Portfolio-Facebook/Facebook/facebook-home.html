@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Static Facebook home page UI mockup built with HTML and internal CSS." />
+  <title>Facebook Home — Static UI Mockup</title>
+  <style>
+    :root {
+      --fb-blue: #0866ff;
+      --fb-blue-dark: #0755d8;
+      --fb-bg: #f0f2f5;
+      --fb-white: #ffffff;
+      --fb-text: #050505;
+      --fb-secondary: #65676b;
+      --fb-muted: #8a8d91;
+      --fb-border: #dddfe2;
+      --fb-hover: #e4e6eb;
+      --fb-green: #42b72a;
+      --fb-red: #f02849;
+      --fb-radius: 8px;
+      --fb-circle: 50%;
+      --header-height: 56px;
+      --left-width: 360px;
+      --content-width: 700px;
+      --right-width: 300px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--fb-text);
+      background: var(--fb-bg);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+    }
+    button, input { font: inherit; }
+    button { border: 0; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ::selection { color: var(--fb-white); background: var(--fb-blue); }
+
+    /* ---------- Fixed Facebook-style top navigation ---------- */
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      top: 0;
+      right: 0;
+      left: 0;
+      display: grid;
+      grid-template-columns: 360px minmax(420px, 1fr) 360px;
+      align-items: center;
+      height: var(--header-height);
+      padding: 0 14px 0 16px;
+      background: var(--fb-white);
+      border-bottom: 1px solid var(--fb-border);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .topbar-left, .topbar-right, .main-nav { display: flex; align-items: center; }
+    .topbar-left { gap: 8px; }
+    .facebook-logo {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      color: var(--fb-white);
+      background: var(--fb-blue);
+      border-radius: var(--fb-circle);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+      overflow: hidden;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: 246px;
+      height: 40px;
+      padding: 0 14px;
+      color: var(--fb-secondary);
+      background: var(--fb-bg);
+      border-radius: 22px;
+    }
+    .search-box span:first-child { color: var(--fb-secondary); font-size: 19px; }
+    .search-box input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--fb-text);
+      background: transparent;
+      font-size: 15px;
+    }
+    .search-box input::placeholder { color: var(--fb-secondary); }
+
+    .main-nav { justify-content: center; align-self: stretch; gap: 7px; }
+    .nav-item {
+      position: relative;
+      display: grid;
+      width: 108px;
+      height: 54px;
+      place-items: center;
+      color: var(--fb-secondary);
+      font-size: 25px;
+      transition: color 150ms ease, background 150ms ease;
+    }
+    .nav-item:hover { color: var(--fb-blue); background: var(--fb-bg); border-radius: 9px; }
+    .nav-item.active { color: var(--fb-blue); }
+    .nav-item.active::after {
+      position: absolute;
+      right: 0;
+      bottom: -1px;
+      left: 0;
+      height: 3px;
+      background: var(--fb-blue);
+      content: "";
+    }
+    .nav-icon { line-height: 1; }
+
+    .topbar-right { justify-content: flex-end; gap: 8px; }
+    .round-action {
+      position: relative;
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      color: var(--fb-text);
+      background: var(--fb-bg);
+      border-radius: var(--fb-circle);
+      font-size: 21px;
+      transition: background 150ms ease, transform 150ms ease;
+    }
+    .round-action:hover { background: var(--fb-hover); transform: translateY(-1px); }
+    .notification-badge {
+      position: absolute;
+      top: -3px;
+      right: -2px;
+      display: grid;
+      width: 20px;
+      height: 20px;
+      place-items: center;
+      color: var(--fb-white);
+      background: var(--fb-red);
+      border: 2px solid var(--fb-white);
+      border-radius: var(--fb-circle);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .user-avatar {
+      position: relative;
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      color: #5f6368;
+      background: linear-gradient(#e5e7eb 0 45%, #bfc3c8 45% 100%);
+      border-radius: var(--fb-circle);
+      overflow: visible;
+      font-size: 22px;
+    }
+    .user-avatar::after {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      display: grid;
+      width: 15px;
+      height: 15px;
+      place-items: center;
+      color: var(--fb-text);
+      background: var(--fb-white);
+      border: 1px solid var(--fb-border);
+      border-radius: var(--fb-circle);
+      content: "⌄";
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ---------- Three-column home layout ---------- */
+    .page-grid {
+      display: grid;
+      grid-template-columns: var(--left-width) minmax(560px, 1fr) var(--right-width);
+      gap: 0;
+      min-height: 100vh;
+      padding-top: var(--header-height);
+    }
+
+    .left-sidebar {
+      position: sticky;
+      top: var(--header-height);
+      align-self: start;
+      height: calc(100vh - var(--header-height));
+      padding: 16px 12px 22px 16px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .sidebar-menu { display: grid; gap: 2px; }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      min-height: 51px;
+      padding: 6px 12px 6px 0;
+      border-radius: 9px;
+      font-weight: 600;
+      transition: background 150ms ease;
+    }
+    .sidebar-link:hover { background: var(--fb-hover); }
+    .sidebar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sidebar-avatar {
+      display: grid;
+      flex: 0 0 38px;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      color: #5f6368;
+      background: linear-gradient(#e7e9ec 0 45%, #bbc0c6 45% 100%);
+      border-radius: var(--fb-circle);
+      font-size: 22px;
+    }
+    .menu-icon {
+      display: grid;
+      flex: 0 0 38px;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 10px;
+      font-size: 23px;
+    }
+    .icon-ai { color: #9c32ff; background: #f0dcff; }
+    .icon-friends { color: #1499e8; background: #d8f1ff; }
+    .icon-saved { color: #9b56dd; background: #f0e1ff; }
+    .icon-groups { color: #1674df; background: #d8edff; }
+    .icon-memories { color: #1b86d6; background: #e0f2ff; }
+    .icon-reels { color: #ed4966; background: #ffe4ea; }
+    .icon-market { color: #159355; background: #dbf6e8; }
+    .icon-feeds { color: #ec8610; background: #fff0d8; }
+    .icon-more { color: var(--fb-text); background: #e4e6eb; }
+    .sidebar-separator { height: 1px; margin: 14px 12px 9px 0; background: var(--fb-border); }
+    .sidebar-heading { padding: 0 12px 6px 0; color: var(--fb-secondary); font-size: 17px; font-weight: 700; }
+    .shortcut-placeholder {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 42px;
+      color: var(--fb-secondary);
+      font-size: 13px;
+    }
+    .shortcut-dot { width: 30px; height: 30px; background: linear-gradient(135deg, #d8dce1, #aeb4bd); border-radius: 7px; }
+
+    .feed-column {
+      width: min(100%, var(--content-width));
+      justify-self: center;
+      padding: 16px 14px 60px;
+    }
+
+    /* ---------- Composer ---------- */
+    .composer {
+      padding: 12px 14px 9px;
+      background: var(--fb-white);
+      border: 1px solid var(--fb-border);
+      border-radius: var(--fb-radius);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+    .composer-top { display: flex; align-items: center; gap: 10px; padding-bottom: 11px; }
+    .composer-avatar, .post-avatar {
+      display: grid;
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      color: #5f6368;
+      background: linear-gradient(#e7e9ec 0 45%, #bbc0c6 45% 100%);
+      border-radius: var(--fb-circle);
+      font-size: 22px;
+    }
+    .composer-prompt {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      height: 40px;
+      padding: 0 14px;
+      color: var(--fb-secondary);
+      background: var(--fb-bg);
+      border-radius: 21px;
+      font-size: 17px;
+    }
+    .composer-actions { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--fb-border); padding-top: 5px; }
+    .composer-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 34px;
+      color: var(--fb-secondary);
+      background: transparent;
+      border-radius: 7px;
+      font-weight: 600;
+    }
+    .composer-action:hover { background: var(--fb-hover); }
+    .composer-action span:first-child { font-size: 21px; }
+    .live { color: var(--fb-red); }
+    .photo { color: var(--fb-green); }
+    .feeling { color: #f7a800; }
+
+    /* ---------- Stories ---------- */
+    .stories-card { margin-top: 12px; overflow: hidden; background: transparent; }
+    .stories-row { display: flex; gap: 8px; overflow-x: auto; padding: 0 0 2px; scrollbar-width: none; }
+    .stories-row::-webkit-scrollbar { display: none; }
+    .story {
+      position: relative;
+      flex: 0 0 112px;
+      height: 165px;
+      overflow: hidden;
+      background: #d9dde2;
+      border-radius: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.18);
+      transition: transform 150ms ease;
+    }
+    .story:hover { transform: translateY(-2px); }
+    .story-placeholder { position: absolute; inset: 0; background: linear-gradient(145deg, #e2e5e9, #9ea5ad); }
+    .story-placeholder::before {
+      position: absolute;
+      top: 32px;
+      left: 31px;
+      width: 49px;
+      height: 49px;
+      background: #666c72;
+      border-radius: var(--fb-circle);
+      content: "";
+    }
+    .story-placeholder::after {
+      position: absolute;
+      right: 22px;
+      bottom: 31px;
+      left: 22px;
+      height: 58px;
+      background: #60666b;
+      border-radius: 38px 38px 5px 5px;
+      content: "";
+    }
+    .story.has-color .story-placeholder { background: linear-gradient(145deg, #a33b9f, #1c2a75 55%, #db762e); }
+    .story.disney .story-placeholder { background: linear-gradient(145deg, #33487c, #e7aa47 52%, #65512f); }
+    .story.walmart .story-placeholder { background: linear-gradient(145deg, #0e75b7, #e9edf5 58%, #dfb33d); }
+    .story-user-ring {
+      position: absolute;
+      z-index: 2;
+      top: 9px;
+      left: 9px;
+      width: 37px;
+      height: 37px;
+      padding: 3px;
+      background: var(--fb-blue);
+      border: 2px solid var(--fb-white);
+      border-radius: var(--fb-circle);
+    }
+    .story-user-ring::after { display: block; width: 100%; height: 100%; background: #aeb3b9; border-radius: var(--fb-circle); content: ""; }
+    .story-name {
+      position: absolute;
+      right: 10px;
+      bottom: 9px;
+      left: 10px;
+      z-index: 2;
+      color: var(--fb-white);
+      font-weight: 700;
+      text-shadow: 0 1px 4px rgba(0,0,0,.7);
+    }
+    .create-story { background: var(--fb-white); }
+    .create-story .story-placeholder { height: 108px; background: linear-gradient(#dfe2e6, #b8bdc3); }
+    .create-story .story-placeholder::before { top: 28px; }
+    .create-story .story-placeholder::after { bottom: 15px; }
+    .create-story .story-name { color: var(--fb-text); text-align: center; text-shadow: none; }
+    .plus-button {
+      position: absolute;
+      z-index: 3;
+      top: 86px;
+      left: 39px;
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: var(--fb-white);
+      background: var(--fb-blue);
+      border: 4px solid var(--fb-white);
+      border-radius: var(--fb-circle);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    /* ---------- One-template post ---------- */
+    .post {
+      margin-top: 12px;
+      overflow: hidden;
+      background: var(--fb-white);
+      border: 1px solid var(--fb-border);
+      border-radius: var(--fb-radius);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+    .post-header { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px 10px; }
+    .post-heading { flex: 1; min-width: 0; }
+    .post-author { margin: 1px 0 2px; font-weight: 700; }
+    .post-meta { color: var(--fb-secondary); font-size: 13px; }
+    .post-menu { display: flex; gap: 2px; }
+    .post-menu button { width: 34px; height: 34px; color: var(--fb-secondary); background: transparent; border-radius: var(--fb-circle); font-size: 21px; }
+    .post-menu button:hover { background: var(--fb-hover); }
+    .post-copy { padding: 0 14px 12px; line-height: 1.4; }
+    .post-media {
+      display: grid;
+      min-height: 360px;
+      place-items: center;
+      color: #6c737b;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.4), transparent),
+        repeating-linear-gradient(45deg, #dce0e4 0 10px, #d3d8dd 10px 20px);
+      border-top: 1px solid var(--fb-border);
+      border-bottom: 1px solid var(--fb-border);
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+    .media-placeholder { display: grid; gap: 8px; place-items: center; padding: 28px; text-align: center; }
+    .media-placeholder-icon { display: grid; width: 64px; height: 64px; place-items: center; color: #71777e; border: 2px dashed #8c939a; border-radius: 12px; font-size: 29px; }
+    .post-stats { display: flex; justify-content: space-between; padding: 9px 14px 6px; color: var(--fb-secondary); font-size: 13px; }
+    .reaction-icons { color: var(--fb-blue); letter-spacing: -4px; }
+    .post-actions { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0 10px; padding: 4px 0; border-top: 1px solid var(--fb-border); }
+    .post-action { min-height: 36px; color: var(--fb-secondary); background: transparent; border-radius: 7px; font-weight: 600; }
+    .post-action:hover { background: var(--fb-hover); }
+
+    /* ---------- Right column ---------- */
+    .right-sidebar {
+      position: sticky;
+      top: var(--header-height);
+      align-self: start;
+      height: calc(100vh - var(--header-height));
+      padding: 22px 17px;
+      overflow-y: auto;
+    }
+    .right-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; color: var(--fb-secondary); font-size: 17px; font-weight: 700; }
+    .right-heading a { color: var(--fb-blue); font-size: 13px; font-weight: 400; }
+    .birthday-card { display: flex; gap: 12px; padding: 9px; border-radius: 8px; }
+    .birthday-card:hover { background: var(--fb-hover); }
+    .gift-icon { display: grid; flex: 0 0 38px; width: 38px; height: 38px; place-items: center; color: #ef4e72; background: #ffe1e8; border-radius: 9px; font-size: 22px; }
+    .birthday-text { font-size: 13px; line-height: 1.35; }
+    .right-divider { height: 1px; margin: 18px 0; background: var(--fb-border); }
+    .contact-row { display: flex; align-items: center; gap: 11px; padding: 6px 0; font-size: 14px; font-weight: 600; }
+    .contact-avatar { position: relative; width: 34px; height: 34px; background: linear-gradient(145deg, #d8dde3, #9ba2aa); border-radius: var(--fb-circle); }
+    .contact-avatar::after { position: absolute; right: -1px; bottom: 0; width: 9px; height: 9px; background: #31a24c; border: 2px solid var(--fb-bg); border-radius: var(--fb-circle); content: ""; }
+
+    @media (max-width: 1250px) {
+      :root { --left-width: 280px; --right-width: 250px; }
+      .topbar { grid-template-columns: 280px minmax(420px, 1fr) 250px; }
+      .search-box { width: 220px; }
+      .nav-item { width: 84px; }
+    }
+    @media (max-width: 1000px) {
+      :root { --left-width: 250px; --right-width: 0px; }
+      .topbar { grid-template-columns: 250px 1fr 220px; }
+      .right-sidebar { display: none; }
+      .feed-column { width: min(100%, 700px); }
+    }
+    @media (max-width: 720px) {
+      :root { --left-width: 0px; }
+      .topbar { grid-template-columns: 45px 1fr auto; padding: 0 8px; }
+      .facebook-logo { width: 36px; height: 36px; font-size: 30px; }
+      .search-box { width: 42px; padding: 0 11px; }
+      .search-box input { display: none; }
+      .topbar-right { gap: 4px; }
+      .topbar-right .round-action:nth-child(1), .topbar-right .round-action:nth-child(2) { display: none; }
+      .round-action, .user-avatar { width: 36px; height: 36px; }
+      .main-nav { position: absolute; top: 56px; right: 0; left: 0; justify-content: space-around; height: 48px; background: var(--fb-white); border-bottom: 1px solid var(--fb-border); }
+      .nav-item { width: auto; flex: 1; height: 48px; }
+      .page-grid { display: block; padding-top: 104px; }
+      .left-sidebar { display: none; }
+      .feed-column { width: 100%; padding: 10px 8px 40px; }
+      .story { flex-basis: 105px; height: 155px; }
+      .composer-action { font-size: 12px; }
+      .post-media { min-height: 290px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" aria-label="Facebook top navigation">
+    <div class="topbar-left">
+      <a class="facebook-logo" href="#home" aria-label="Facebook home">f</a>
+      <label class="search-box" aria-label="Search Facebook">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" placeholder="Search Facebook" />
+      </label>
+    </div>
+
+    <nav class="main-nav" aria-label="Primary navigation">
+      <a class="nav-item active" href="#home" aria-label="Home"><span class="nav-icon">⌂</span></a>
+      <a class="nav-item" href="#videos" aria-label="Videos"><span class="nav-icon">▣</span></a>
+      <a class="nav-item" href="#friends" aria-label="Friends"><span class="nav-icon">♧</span></a>
+      <a class="nav-item" href="#marketplace" aria-label="Marketplace"><span class="nav-icon">▱</span></a>
+      <a class="nav-item" href="#groups" aria-label="Groups"><span class="nav-icon">◎</span></a>
+    </nav>
+
+    <div class="topbar-right">
+      <a class="round-action" href="#menu" aria-label="Menu">⠿</a>
+      <a class="round-action" href="#messenger" aria-label="Messenger">◈<span class="notification-badge">8</span></a>
+      <a class="round-action" href="#notifications" aria-label="Notifications">♟</a>
+      <a class="user-avatar" href="#profile" aria-label="Profile">●</a>
+    </div>
+  </header>
+
+  <div class="page-grid" id="home">
+    <aside class="left-sidebar" aria-label="Facebook sidebar navigation">
+      <nav class="sidebar-menu">
+        <a class="sidebar-link" href="#profile"><span class="sidebar-avatar">●</span><span class="sidebar-label">Muhammad Ayan Hamdani Rehman</span></a>
+        <a class="sidebar-link" href="#meta-ai"><span class="menu-icon icon-ai">✣</span><span class="sidebar-label">Meta AI</span></a>
+        <a class="sidebar-link" href="#friends"><span class="menu-icon icon-friends">♟</span><span class="sidebar-label">Friends</span></a>
+        <a class="sidebar-link" href="#saved"><span class="menu-icon icon-saved">▮</span><span class="sidebar-label">Saved</span></a>
+        <a class="sidebar-link" href="#groups"><span class="menu-icon icon-groups">♟</span><span class="sidebar-label">Groups</span></a>
+        <a class="sidebar-link" href="#memories"><span class="menu-icon icon-memories">◷</span><span class="sidebar-label">Memories</span></a>
+        <a class="sidebar-link" href="#reels"><span class="menu-icon icon-reels">▶</span><span class="sidebar-label">Reels</span></a>
+        <a class="sidebar-link" href="#marketplace"><span class="menu-icon icon-market">▥</span><span class="sidebar-label">Marketplace</span></a>
+        <a class="sidebar-link" href="#feeds"><span class="menu-icon icon-feeds">▤</span><span class="sidebar-label">Feeds</span></a>
+        <a class="sidebar-link" href="#more"><span class="menu-icon icon-more">⌄</span><span class="sidebar-label">See more</span></a>
+      </nav>
+      <div class="sidebar-separator"></div>
+      <div class="sidebar-heading">Your shortcuts</div>
+      <div class="shortcut-placeholder"><span class="shortcut-dot"></span><span>Shortcut placeholder</span></div>
+      <div class="shortcut-placeholder"><span class="shortcut-dot"></span><span>More shortcuts</span></div>
+    </aside>
+
+    <main class="feed-column" aria-label="Facebook news feed">
+      <section class="composer" aria-label="Create a post">
+        <div class="composer-top">
+          <span class="composer-avatar" aria-hidden="true">●</span>
+          <div class="composer-prompt">What's on your mind, Muhammad Ayan?</div>
+        </div>
+        <div class="composer-actions">
+          <button class="composer-action" type="button"><span class="live">▣</span><span>Live video</span></button>
+          <button class="composer-action" type="button"><span class="photo">▧</span><span>Photo/video</span></button>
+          <button class="composer-action" type="button"><span class="feeling">☺</span><span>Feeling/activity</span></button>
+        </div>
+      </section>
+
+      <section class="stories-card" aria-label="Stories">
+        <div class="stories-row">
+          <article class="story create-story">
+            <div class="story-placeholder" aria-label="Profile image placeholder"></div>
+            <button class="plus-button" type="button" aria-label="Create story">+</button>
+            <div class="story-name">Create story</div>
+          </article>
+          <article class="story has-color">
+            <div class="story-placeholder" aria-label="Story image placeholder"></div>
+            <span class="story-user-ring" aria-hidden="true"></span>
+            <div class="story-name">Waleed<br />Ahmad</div>
+          </article>
+          <article class="story disney">
+            <div class="story-placeholder" aria-label="Story image placeholder"></div>
+            <span class="story-user-ring" aria-hidden="true"></span>
+            <div class="story-name">Disney</div>
+          </article>
+          <article class="story walmart">
+            <div class="story-placeholder" aria-label="Story image placeholder"></div>
+            <span class="story-user-ring" aria-hidden="true"></span>
+            <div class="story-name">Walmart</div>
+          </article>
+        </div>
+      </section>
+
+      <article class="post" aria-label="Post template">
+        <header class="post-header">
+          <div class="post-avatar" aria-label="Post author image placeholder">●</div>
+          <div class="post-heading">
+            <div class="post-author">Ayan Hamdani</div>
+            <div class="post-meta">Just now · <span aria-label="Public post">◉</span></div>
+          </div>
+          <div class="post-menu">
+            <button type="button" aria-label="More post options">•••</button>
+            <button type="button" aria-label="Close post">×</button>
+          </div>
+        </header>
+        <div class="post-copy">This is a post template. Replace this text and the media placeholder with your own post content.</div>
+        <div class="post-media" aria-label="Post image placeholder">
+          <div class="media-placeholder">
+            <img src="ayan.jpeg" alt="Ayan Hamdani" style="max-width: 100%; height: auto; border-radius: 8px;">
+          </div>
+        </div>
+        <div class="post-stats">
+          <span class="reaction-icons">● ●</span><span>0 comments · 0 shares</span>
+        </div>
+        <div class="post-actions">
+          <button class="post-action" type="button">♡ Like</button>
+          <button class="post-action" type="button">◯ Comment</button>
+          <button class="post-action" type="button">↗ Share</button>
+        </div>
+      </article>
+    </main>
+
+    <aside class="right-sidebar" aria-label="Facebook right sidebar">
+      <div class="right-heading"><span>Birthdays</span></div>
+      <div class="birthday-card">
+        <div class="gift-icon">♧</div>
+        <div class="birthday-text"><strong>Birthday reminder</strong><br />No birthdays today.</div>
+      </div>
+      <div class="right-divider"></div>
+      <div class="right-heading"><span>Contacts</span><a href="#search-contacts">⌕</a></div>
+      <div class="contact-row"><span class="contact-avatar"></span><span>Contact placeholder</span></div>
+      <div class="contact-row"><span class="contact-avatar"></span><span>Friend placeholder</span></div>
+      <div class="contact-row"><span class="contact-avatar"></span><span>Online contact</span></div>
+    </aside>
+  </div>
+</body>
+</html>
