@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IEEE conference-style technical paper formatted with HTML and Bootstrap.">
+  <title>IEEE Conference Paper</title>
+
+  <!-- Bootstrap 5.3 CSS from the official Bootstrap CDN distribution. -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <style>
+    /* Bootstrap handles the responsive grid, spacing, alignment, table,
+       and utility styling. These rules retain only IEEE paper-specific
+       typography, print dimensions, and elements Bootstrap cannot reproduce. */
+    :root {
+      --paper-width: 8.5in;
+      --ink: #111;
+      --rule: #222;
+    }
+
+    @page {
+      size: Letter;
+      margin: .55in .65in;
+    }
+
+    html {
+      background: #e7e7e7;
+    }
+
+    body {
+      width: min(100%, var(--paper-width));
+      min-height: 11in;
+      margin: 24px auto;
+      padding: .55in .65in;
+      color: var(--ink);
+      background: #fff;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 10pt;
+      line-height: 1.05;
+      text-align: justify;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    .paper-title {
+      font-size: 24pt;
+      line-height: 1.1;
+      font-weight: 400;
+    }
+
+    .subtitle-note {
+      font-size: 8pt;
+    }
+
+    .authors {
+      font-size: 8.5pt;
+      line-height: 1.05;
+    }
+
+    .author strong {
+      display: block;
+      font-weight: 400;
+    }
+
+    .author em {
+      font-style: normal;
+    }
+
+    .paper-grid {
+      align-items: start;
+    }
+
+    .abstract,
+    .keywords {
+      font-size: 9pt;
+      line-height: 1.05;
+    }
+
+    .abstract b,
+    .keywords b {
+      font-style: italic;
+    }
+
+    .section-heading {
+      font-size: 10pt;
+      line-height: 1.05;
+      font-weight: 400;
+    }
+
+    .subheading {
+      font-size: 10pt;
+      line-height: 1.05;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    p {
+      margin-bottom: 7px;
+    }
+
+    ul,
+    ol {
+      margin-top: 3px;
+      margin-bottom: 8px;
+    }
+
+    li {
+      margin-bottom: 3px;
+    }
+
+    .equation {
+      font-style: italic;
+    }
+
+    .equation-number {
+      font-style: normal;
+    }
+
+    .table-wrap {
+      break-inside: avoid;
+    }
+
+    table {
+      font-size: 8.2pt;
+    }
+
+    caption {
+      caption-side: top;
+      font-size: 8pt;
+      font-variant: small-caps;
+    }
+
+    th,
+    td {
+      padding: 3px 4px !important;
+      border-color: var(--rule) !important;
+    }
+
+    .figure-placeholder {
+      min-height: 105px;
+      border: 1px solid #555;
+      background: repeating-linear-gradient(135deg, #fafafa, #fafafa 7px, #f0f0f0 7px, #f0f0f0 14px);
+      font-size: 9pt;
+    }
+
+    .figure-caption {
+      font-size: 8pt;
+    }
+
+    .references ol {
+      font-size: 8.5pt;
+      line-height: 1.05;
+    }
+
+    .acknowledgment strong {
+      font-variant: small-caps;
+    }
+
+    .funding-note {
+      border-top: 1px solid #555;
+      font-size: 8pt;
+    }
+
+    .copyright {
+      font-size: 8pt;
+    }
+
+    @media print {
+      html {
+        background: #fff;
+      }
+
+      body {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      body {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        padding: 28px 20px;
+      }
+
+      .paper-title {
+        font-size: 20pt;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1 class="paper-title text-center mb-1">A CSS-Only Framework for Structuring Accessible Web Documents</h1>
+    <p class="subtitle-note text-center mb-4"><em>*Note: This paper follows a compact IEEE conference-paper
+        presentation.</em></p>
+
+    <section class="authors row row-cols-2 row-cols-md-4 g-3 g-md-4 text-center mb-4" aria-label="Authors">
+      <div class="author col"><strong>1st Given Name Surname</strong><em>Department of Computer
+          Science</em><br>University of Example<br>City, Country<br>email@example.com</div>
+      <div class="author col"><strong>2nd Given Name Surname</strong><em>Department of Information
+          Technology</em><br>Institute of Example<br>City, Country<br>email@example.com</div>
+      <div class="author col"><strong>3rd Given Name Surname</strong><em>Department of Software
+          Engineering</em><br>College of Example<br>City, Country<br>email@example.com</div>
+      <div class="author col"><strong>4th Given Name Surname</strong><em>Department of Computer
+          Engineering</em><br>University of Example<br>City, Country<br>email@example.com</div>
+      <div class="author col offset-md-3"><strong>5th Given Name Surname</strong><em>Department of Computer
+          Science</em><br>University of Example<br>City, Country<br>email@example.com</div>
+      <div class="author col"><strong>6th Given Name Surname</strong><em>Department of Information
+          Systems</em><br>Institute of Example<br>City, Country<br>email@example.com</div>
+    </section>
+  </header>
+
+  <main class="paper-grid row g-4">
+    <div class="column col-12 col-md-6">
+      <p class="abstract mb-2"><b>Abstract—</b>This paper presents a concise method for structuring a technical web
+        document using semantic HTML and Cascading Style Sheets (CSS). The approach maps common IEEE conference-paper
+        conventions to a responsive document structure while retaining a print-oriented two-column format. The resulting
+        page is lightweight, readable, and suitable for academic demonstration without client-side scripting.</p>
+      <p class="keywords mb-2"><b>Keywords—</b>HTML, CSS, document structure, academic publishing, responsive layout,
+        web standards</p>
+
+      <h2 class="section-heading text-center text-uppercase fw-normal mt-3 mb-2">I. INTRODUCTION</h2>
+      <p class="dropcap">Technical documents require clear hierarchy, consistent typography, and predictable spacing. In
+        a conference paper, the presentation must support rapid reading while preserving enough structure for figures,
+        tables, equations, and references. A web implementation can reproduce these requirements when semantic elements
+        are combined with carefully defined print and screen styles.</p>
+      <p>This document demonstrates a normal-length conference paper layout. The title and author block appear above two
+        balanced columns, while section headings, captions, and citations follow a restrained academic style. The design
+        intentionally avoids decorative user-interface elements so that the content remains the primary focus.</p>
+
+      <h2 class="section-heading text-center text-uppercase fw-normal mt-3 mb-2">II. DOCUMENT ARCHITECTURE</h2>
+      <h3 class="subheading text-start mt-2 mb-1">A. Semantic Structure</h3>
+      <p>HTML provides the logical outline of the document. A header contains the title and author information, the main
+        element contains the paper body, and individual sections provide meaningful grouping. Figure and table elements
+        are used for visual material, while an ordered list is used for references.</p>
+      <p>The semantic structure improves accessibility because assistive technologies can identify the title, sections,
+        lists, and supporting content. It also makes the document easier to maintain when the paper is revised.</p>
+
+      <h3 class="subheading text-start mt-2 mb-1">B. Layout Rules</h3>
+      <p>CSS Grid is used to establish two equal-width columns. The column gap is kept narrow to approximate the compact
+        layout commonly used in IEEE conference templates. At smaller viewport widths, the columns collapse into a
+        single readable stream.</p>
+      <ul class="ps-4">
+        <li>Use a serif typeface for paper-like text.</li>
+        <li>Keep section headings centered and uppercase.</li>
+        <li>Use restrained spacing so more content fits on each page.</li>
+        <li>Preserve table and figure captions near their content.</li>
+      </ul>
+
+      <h2 class="section-heading text-center text-uppercase fw-normal mt-3 mb-2">III. IMPLEMENTATION</h2>
+      <p>The implementation uses only HTML and internal CSS. No JavaScript is required for the document structure, print
+        formatting, responsive columns, or academic components. The following simplified relation represents the layout
+        model:</p>
+      <div class="equation d-flex justify-content-center align-items-center gap-4 my-3"><span>W<sub>c</sub> =
+          (W<sub>p</sub> − G) / 2</span><span class="equation-number">(1)</span></div>
+      <p>where <i>W<sub>c</sub></i> is the width of one column, <i>W<sub>p</sub></i> is the available paper width, and
+        <i>G</i> is the gap between columns. This relationship keeps both columns balanced while allowing the document
+        to adapt to smaller screens.</p>
+
+      <div class="table-wrap text-center my-3">
+        <table class="table table-bordered table-sm align-middle text-center mb-0">
+          <caption class="mb-1">TABLE I. DOCUMENT COMPONENTS</caption>
+          <thead>
+            <tr>
+              <th scope="col">Component</th>
+              <th scope="col">HTML Element</th>
+              <th scope="col">Primary Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Paper title</td>
+              <td><code>h1</code></td>
+              <td>Identifies the paper</td>
+            </tr>
+            <tr>
+              <td>Section</td>
+              <td><code>section</code></td>
+              <td>Groups related content</td>
+            </tr>
+            <tr>
+              <td>Reference list</td>
+              <td><code>ol</code></td>
+              <td>Orders citations</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="column col-12 col-md-6">
+      <h3 class="subheading text-start mt-2 mb-1">B. Maintaining the Integrity of the Specifications</h3>
+      <p>The template is intended to create a consistent reading experience. Margins, column widths, line spacing, and
+        type sizes should be changed only when a specific publication requirement demands it. Consistency is
+        particularly important when papers are assembled into a proceedings volume.</p>
+
+      <h2 class="section-heading text-center text-uppercase fw-normal mt-3 mb-2">IV. RESPONSIVE PRESENTATION</h2>
+      <p>A paper designed for the screen should remain usable on narrow displays. The desktop version preserves the
+        IEEE-like two-column appearance, while the mobile rule changes the document to one column. This transformation
+        does not change the order of the content; it only changes how the reader encounters it.</p>
+      <p>Print media rules remove the surrounding screen background and return the document to a clean paper surface.
+        The result can be viewed in a browser, printed, or exported to PDF with minimal visual differences.</p>
+
+      <div class="figure-placeholder d-flex justify-content-center align-items-center text-center my-2">[ Conceptual
+        diagram: semantic structure → grid layout → responsive paper ]</div>
+      <p class="figure-caption text-center mb-3">Fig. 1. Relationship between the semantic document structure and the
+        responsive presentation.</p>
+
+      <h2 class="section-heading text-center text-uppercase fw-normal mt-3 mb-2">V. DISCUSSION</h2>
+      <p>The main advantage of this approach is simplicity. A single HTML document can contain the complete paper, and a
+        single internal style sheet can define both screen and print behavior. This makes the result easy to submit,
+        archive, and inspect in an educational setting.</p>
+      <p>There are also limitations. Browser pagination may differ slightly from desktop publishing software, and
+        automatic citation management is outside the scope of a static document. For formal submission, the final paper
+        should still be checked against the conference's current author instructions.</p>
+
+      <h2 class="section-heading text-center text-uppercase fw-normal mt-3 mb-2">VI. CONCLUSION</h2>
+      <p>This paper showed how a short IEEE-style document can be represented using HTML and CSS only. Semantic elements
+        provide the structure, CSS Grid provides the two-column composition, and print media rules support a
+        paper-oriented output. The same principles can be extended to longer manuscripts while keeping the code readable
+        and maintainable.</p>
+
+      <p class="acknowledgment mt-3"><strong>Acknowledgment</strong> The authors thank the academic writing and web
+        standards communities for providing practical guidance on accessible document structure and publication-ready
+        formatting.</p>
+
+      <section class="references mt-3" aria-label="References">
+        <h2 class="section-heading text-center text-uppercase fw-normal mt-3 mb-2">REFERENCES</h2>
+        <ol class="ps-4">
+          <li>IEEE, <i>IEEE Conference Template</i>, IEEE Author Center, 2024.</li>
+          <li>WHATWG, <i>HTML Living Standard</i>, Web Hypertext Application Technology Working Group, 2024.</li>
+          <li>W3C, <i>CSS Grid Layout Module Level 1</i>, World Wide Web Consortium, 2023.</li>
+          <li>W3C, <i>Web Content Accessibility Guidelines 2.2</i>, World Wide Web Consortium, 2023.</li>
+          <li>R. Fielding, “Responsive document presentation on the web,” <i>Journal of Web Engineering</i>, vol. 8, no.
+            2, pp. 44–51, 2022.</li>
+        </ol>
+      </section>
+    </div>
+  </main>
+
+  <p class="funding-note text-center mt-3 pt-1">Identify applicable funding agency here. If none, delete this text box.
+  </p>
+  <p class="copyright mt-3">XXX-X-XXXX-XXXX-X/XX/$XX.00 ©20XX IEEE</p>
+</body>
+
+</html>
